@@ -33,4 +33,4 @@ gcloud functions deploy shrinkify-cloud-agent \
 --trigger-event-filters="serviceName=bigquery.googleapis.com" \
 --trigger-event-filters="methodName=google.cloud.bigquery.v2.JobService.InsertJob" \
 --trigger-event-filters-path-pattern="resourceName=/projects/${GOOGLE_CLOUD_PROJECT}/datasets/shrinkify_output/tables/results_*" \
---timeout=3600s 
+--timeout=520s 
