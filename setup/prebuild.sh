@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+service_account="serviceAccount:${project_number}-compute@developer.gserviceaccount.com"
+cf_name="shrinkify-cloud-agent"
+
 echo "Setting Project ID: ${GOOGLE_CLOUD_PROJECT}"
 gcloud config set project ${GOOGLE_CLOUD_PROJECT}
 
@@ -21,8 +24,15 @@ gcloud auth configure-docker
 echo "Enabling APIs..."
 gcloud services enable artifactregistry.googleapis.com cloudbuild.googleapis.com cloudfunctions.googleapis.com aiplatform.googleapis.com pubsub.googleapis.com eventarc.googleapis.com bigquery.googleapis.com compute.googleapis.com
 
+
+echo "Setting service account permissions"
+gcloud run services add-iam-policy-binding $cf_name \
+  --member=$service_account \
+  --role='roles/run.invoker' \
+  --region=${GOOGLE_CLOUD_REGION}
+
 echo "Creating cloud function..."
-gcloud functions deploy shrinkify-cloud-agent \
+gcloud functions deploy $cf_name \
 --gen2 \
 --region=us-central1 \
 --runtime=python39 \
