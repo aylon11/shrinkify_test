@@ -15,6 +15,9 @@
 echo "Setting Project ID: ${GOOGLE_CLOUD_PROJECT}"
 gcloud config set project ${GOOGLE_CLOUD_PROJECT}
 
+echo "Enabling container deployment..."
+gcloud auth configure-docker
+
 echo "Enabling APIs..."
 gcloud services enable artifactregistry.googleapis.com cloudbuild.googleapis.com cloudfunctions.googleapis.com aiplatform.googleapis.com pubsub.googleapis.com eventarc.googleapis.com bigquery.googleapis.com compute.googleapis.com
 
