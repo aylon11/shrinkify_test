@@ -27,7 +27,7 @@ enable_apis() {
 
 zip_cf_source() {
     echo -e "${COLOR}Zipping cloud function source...${NC}"
-    zip setup/shrinkify_cf.zip cloud_function/cf_agent.py cloud_function/requirements.txt
+    zip -j setup/shrinkify_cf.zip cloud_function/main.py cloud_function/requirements.txt
 }
 
 create_image() {
