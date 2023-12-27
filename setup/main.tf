@@ -96,11 +96,15 @@ resource "google_project_iam_member" "eventarc_admin" {
   member  = "serviceAccount:${local.service_account}"
 }
 
+resource "google_project_iam_member" "pubsub_service_account_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:service-${var.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
+}
+
 #############################################
 # Cloud Run
 #############################################
-
-# Deploy Cloud Run service
 
 data "google_container_registry_image" "shrinkify_image" {
   name = "gcr.io/${var.project_id}/${var.service_name}:latest"
@@ -159,7 +163,7 @@ resource "google_storage_bucket" "cf_zip_bucket" {
 
 resource "google_storage_bucket_object" "source" {
   name   = "shrinkify_cf.zip"
-  source = "./cloud_function/shrinkify_cf.zip"
+  source = "shrinkify_cf.zip"
   bucket = google_storage_bucket.cf_zip_bucket.name
 }
 

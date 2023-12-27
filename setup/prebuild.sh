@@ -37,6 +37,7 @@ echo "Granting service account eventarc permissions..."
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
     --member=$service_account \
     --role=roles/eventarc.eventReceiver
+    
 echo "Creating cloud function..."
 gcloud functions deploy $cf_name \
 --gen2 \

@@ -27,7 +27,7 @@ enable_apis() {
 
 zip_cf_source() {
     echo -e "${COLOR}Zipping cloud function source...${NC}"
-    zip cloud_function/shrinkify_cf.zip cloud_function/cf_agent.py cloud_function/requirements.txt
+    zip setup/shrinkify_cf.zip cloud_function/cf_agent.py cloud_function/requirements.txt
 }
 
 create_image() {
@@ -41,6 +41,8 @@ create_image() {
 }
 
 run_tf() {
+    cd setup
+    terraform init
     echo -e "${COLOR}Creating Infra...${NC}"
     terraform apply -var "project_id=$PROJECT_ID" -var "project_number=$PROJECT_NUMBER" -auto-approve
     echo -e "${COLOR}Infra Created!${NC}"
