@@ -123,11 +123,6 @@ resource "google_cloud_run_service" "shrinkify_service" {
         }
       }
     }
-    metadata {
-      annotations = {
-        "run.googleapis.com/ingress" = "all"
-      }
-    }
   }
   traffic {
     percent         = 100

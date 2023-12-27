@@ -33,13 +33,10 @@ gcloud services enable artifactregistry.googleapis.com \
  bigquery.googleapis.com \
  compute.googleapis.com
 
-
-echo "Setting service account permissions"
-gcloud run services add-iam-policy-binding $cf_name \
-  --member=$service_account \
-  --role='roles/run.invoker' \
-  --region=${GOOGLE_CLOUD_REGION}
-
+echo "Granting service account eventarc permissions..."
+gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
+    --member=$service_account \
+    --role=roles/eventarc.eventReceiver
 echo "Creating cloud function..."
 gcloud functions deploy $cf_name \
 --gen2 \
@@ -53,3 +50,9 @@ gcloud functions deploy $cf_name \
 --trigger-event-filters="methodName=google.cloud.bigquery.v2.JobService.InsertJob" \
 --trigger-event-filters-path-pattern="resourceName=/projects/${GOOGLE_CLOUD_PROJECT}/datasets/shrinkify_output/tables/results_*" \
 --timeout=520s 
+
+echo "Setting service account permissions..."
+gcloud run services add-iam-policy-binding $cf_name \
+  --member=$service_account \
+  --role='roles/run.invoker' \
+  --region=${GOOGLE_CLOUD_REGION}
