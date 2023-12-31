@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+project_number=$(gcloud projects describe ${GOOGLE_CLOUD_PROJECT} --format="value(projectNumber)")
 service_account="serviceAccount:${project_number}-compute@developer.gserviceaccount.com"
 cf_name="shrinkify-cf"
 
