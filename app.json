@@ -1,5 +1,5 @@
 {
-    "name": "Shrinkify",
+    "name": "shrinkify_service",
     "options": {
       "allow-unauthenticated": true,
       "memory": "512Mi",
