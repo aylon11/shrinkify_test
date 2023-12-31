@@ -13,7 +13,7 @@
 # limitations under the License.
 
 service_account="serviceAccount:${project_number}-compute@developer.gserviceaccount.com"
-cf_name="shrinkify-cloud-agent"
+cf_name="shrinkify-cf"
 
 echo "Setting Project ID: ${GOOGLE_CLOUD_PROJECT}"
 gcloud config set project ${GOOGLE_CLOUD_PROJECT}
@@ -37,7 +37,7 @@ echo "Granting service account eventarc permissions..."
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
     --member=$service_account \
     --role=roles/eventarc.eventReceiver
-    
+
 echo "Creating cloud function..."
 gcloud functions deploy $cf_name \
 --gen2 \

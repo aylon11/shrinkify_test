@@ -203,7 +203,7 @@ resource "google_cloudfunctions2_function" "function" {
   event_trigger {
     trigger_region = var.region
     event_type = "google.cloud.audit.log.v1.written"
-    retry_policy = "RETRY_POLICY_RETRY"
+    retry_policy = "RETRY_POLICY_DO_NOT_RETRY"
     service_account_email = local.service_account
     event_filters {
       attribute = "serviceName"
@@ -215,7 +215,7 @@ resource "google_cloudfunctions2_function" "function" {
     }
     event_filters {
       attribute = "resourceName"
-      value = "resourceName=/projects/${var.project_id}/datasets/${var.dataset_id}/tables/${var.table_id}"
+      value = "/projects/${var.project_id}/datasets/${var.dataset_id}/tables/${var.table_id}"
       operator = "match-path-pattern" # This allows path patterns to be used in the value field
     }
   }
